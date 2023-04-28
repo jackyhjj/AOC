@@ -37,20 +37,23 @@ def part_2():
     rucksack_lists = []
     total = 0
     for line in input:
-        if len(rucksack_lists) != 3:
-            rucksack_lists.append(line)
-        else:
-            same_item_list = set(rucksack_lists[0]).intersection(rucksack_lists[1]).intersection(rucksack_lists[2])
+        rucksack_lists.append(line)
+        
+        if len(rucksack_lists) == 3:
+            first_bag = set(rucksack_lists[0])
+            second_bag = set(rucksack_lists[1])
+            third_bag = set(rucksack_lists[2])
+            same_item_list = list((first_bag.intersection(second_bag)).intersection(third_bag))
+            # print(same_item_list)
 
-            for item in same_item_list:
-                if item in ascii_lowercase:
-                    total += ascii_lowercase.index(item) + 1
-                else:
-                    total += ascii_uppercase.index(item) + 27
+            if same_item_list[0] in ascii_lowercase:
+                total += ord(same_item_list[0]) - ord('a') + 1
+            else:
+                total += ord(same_item_list[0]) - ord('A') + 27
+            
+            rucksack_lists = []
 
-        rucksack_lists = []
     return total
-
 
 read_input_file(input_file)
 
