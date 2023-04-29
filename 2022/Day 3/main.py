@@ -1,17 +1,14 @@
+import sys, os
+sys.path.insert(0, '/Volumes/Files/Projects/AOC/')
+
 from string import ascii_lowercase, ascii_uppercase
+from pathlib import Path
+import helper
 
-input_file = "input.txt"
+dirpath = os.path.dirname(os.path.realpath(__file__))
+filepath = os.path.join(dirpath, 'input.txt')
+
 input = []
-
-
-def read_input_file(input_file):
-    with open(input_file) as f:
-        for line in f:
-            if (len(line.strip()) > 0):
-                line = line.replace("\n", "")
-                line = line.replace(" ", "")
-                input.append(line)
-
 
 def part_1():
     total = 0
@@ -31,7 +28,6 @@ def part_1():
                 total += ascii_uppercase.index(item) + 27
 
     return total
-
 
 def part_2():
     rucksack_lists = []
@@ -55,7 +51,7 @@ def part_2():
 
     return total
 
-read_input_file(input_file)
+input = helper.read_input_file(filepath)
 
 print(part_1())
 print(part_2())
