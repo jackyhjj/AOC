@@ -3,8 +3,7 @@ sys.path.insert(0, '/Volumes/Files/Projects/AOC/')
 
 from string import ascii_lowercase, ascii_uppercase
 from pathlib import Path
-import re
-import helper
+import re,helper, copy
 
 dirpath = os.path.dirname(os.path.realpath(__file__))
 filepath = os.path.join(dirpath, 'input.txt')
@@ -35,21 +34,41 @@ def get_crates_and_movement(input):
 
 def part_1():
     text = ""
+    tmp_crates = copy.deepcopy(crates)
     for move in movements:
         for loop in range(int(move[0])):
-            remove = crates[int(move[1])-1].pop(0)
-            crates[int(move[2])-1].insert(0, remove)
+            remove = tmp_crates[int(move[1])-1].pop(0)
+            tmp_crates[int(move[2])-1].insert(0, remove)
     
-    for crate in range(len(crates)):
-        text = text + crates[crate][0]
+    for crate in range(len(tmp_crates)):
+        text = text + tmp_crates[crate][0]
 
     print(text)
 
 def part_2():
-    return False
+    text = ""
+    tmp_crates = copy.deepcopy(crates)
+    # print(tmp_crates)
+
+    for move in movements:
+        # print(move)
+        remove_stack = []
+        for loop in range(int(move[0])):
+            # print(loop)
+            remove_stack.append(tmp_crates[int(move[1])-1].pop(0))
+        
+        while len(remove_stack) != 0:
+            tmp_crates[int(move[2])-1].insert(0, remove_stack.pop())
+        
+        # print(tmp_crates)
+
+    for crate in range(len(tmp_crates)):
+        text = text + tmp_crates[crate][0]
+
+    print(text)
 
 get_crates_and_movement(input)
 # print(crates)
 # print(movements)
 part_1()
-print(part_2())
+part_2()
